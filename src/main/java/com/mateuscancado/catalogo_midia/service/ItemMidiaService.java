@@ -5,6 +5,7 @@ import com.mateuscancado.catalogo_midia.dto.ItemMidiaResponseDTO;
 import com.mateuscancado.catalogo_midia.mapper.ItemMidiaMapper;
 import com.mateuscancado.catalogo_midia.model.ItemMidia;
 import com.mateuscancado.catalogo_midia.repository.ItemMidiaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,10 @@ public class ItemMidiaService {
     public ItemMidiaResponseDTO salvar(ItemMidiaRequestDTO dto) {
         ItemMidia salvo = itemMidiaRepository.save(itemMidiaMapper.toEntity(dto));
         return itemMidiaMapper.toResponse(salvo);
+    }
+
+    public ItemMidiaResponseDTO buscar(Long id) {
+        ItemMidia item = itemMidiaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return itemMidiaMapper.toResponse(item);
     }
 }
