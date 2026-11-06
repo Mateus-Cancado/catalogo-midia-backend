@@ -1,7 +1,9 @@
 package com.mateuscancado.catalogo_midia.controller;
 
-import com.mateuscancado.catalogo_midia.model.ItemMidia;
+import com.mateuscancado.catalogo_midia.dto.ItemMidiaRequestDTO;
+import com.mateuscancado.catalogo_midia.dto.ItemMidiaResponseDTO;
 import com.mateuscancado.catalogo_midia.service.ItemMidiaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +20,9 @@ public class ItemMidiaController {
     private final ItemMidiaService itemMidiaService;
 
     @PostMapping
-    public ResponseEntity<ItemMidia> salvar(@RequestBody ItemMidia itemMidia) {
+    public ResponseEntity<ItemMidiaResponseDTO> salvar(@Valid @RequestBody ItemMidiaRequestDTO dto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(itemMidiaService.salvar(itemMidia));
+                .body(itemMidiaService.salvar(dto));
     }
 }
