@@ -26,12 +26,31 @@ public class ItemMidiaService {
     }
 
     public ItemMidiaResponseDTO buscar(Long id) {
-        ItemMidia item = itemMidiaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        ItemMidia item = buscarEntidadePorId(id);
         return itemMidiaMapper.toResponse(item);
     }
 
     public List<ItemMidiaResponseDTO> buscarFiltro(FilterRequestDTO dto) {
-        List<ItemMidia> list = itemMidiaRepository.findByTituloOrAutor(dto.tituloOrAutorDiretor());
-        return itemMidiaMapper.toResponseList(list);
+        List<ItemMidia> lista = itemMidiaRepository.findByTituloOrAutor(dto.tituloOrAutorDiretor());
+        return itemMidiaMapper.toResponseList(lista);
+    }
+
+    public ItemMidiaResponseDTO atualizar(Long id, ItemMidiaRequestDTO dto) {
+        ItemMidia item = buscarEntidadePorId(id);
+        item.setTitulo(dto.titulo());
+        item.setAutorDiretor(dto.autorDiretor());
+        item.setAnoLancamento(dto.anoLancamento());
+        item.setGenero(dto.genero());
+        item.setSinopse(dto.sinopse());
+        item.setTipoMidia(dto.tipoMidia());
+        return itemMidiaMapper.toResponse(itemMidiaRepository.save(item));
+    }
+
+    public void deletar(Long id) {
+        itemMidiaRepository.deleteById(id);
+    }
+
+    private ItemMidia buscarEntidadePorId(Long id) {
+        return itemMidiaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

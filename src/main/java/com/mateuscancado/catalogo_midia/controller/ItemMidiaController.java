@@ -37,4 +37,15 @@ public class ItemMidiaController {
         return ResponseEntity
                 .ok(itemMidiaService.buscarFiltro(dto));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ItemMidiaResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody ItemMidiaRequestDTO dto) {
+        return ResponseEntity.ok(itemMidiaService.atualizar(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        itemMidiaService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 }
