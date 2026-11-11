@@ -3,6 +3,7 @@ package com.mateuscancado.catalogo_midia.service;
 import com.mateuscancado.catalogo_midia.dto.FilterRequestDTO;
 import com.mateuscancado.catalogo_midia.dto.ItemMidiaRequestDTO;
 import com.mateuscancado.catalogo_midia.dto.ItemMidiaResponseDTO;
+import com.mateuscancado.catalogo_midia.exceptions.MidiaNaoEncontradaException;
 import com.mateuscancado.catalogo_midia.mapper.ItemMidiaMapper;
 import com.mateuscancado.catalogo_midia.model.ItemMidia;
 import com.mateuscancado.catalogo_midia.repository.ItemMidiaRepository;
@@ -51,6 +52,6 @@ public class ItemMidiaService {
     }
 
     private ItemMidia buscarEntidadePorId(Long id) {
-        return itemMidiaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return itemMidiaRepository.findById(id).orElseThrow(MidiaNaoEncontradaException::new);
     }
 }
