@@ -5,6 +5,8 @@ import com.mateuscancado.catalogo_midia.dto.ItemMidiaResponseDTO;
 import com.mateuscancado.catalogo_midia.model.ItemMidia;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ItemMidiaMapper {
 
@@ -28,5 +30,11 @@ public class ItemMidiaMapper {
                 entity.getGenero(),
                 entity.getSinopse(),
                 entity.getTipoMidia());
+    }
+
+    public List<ItemMidiaResponseDTO> toResponseList(List<ItemMidia> entities) {
+        return entities.stream()
+                .map(this::toResponse)
+                .toList();
     }
 }

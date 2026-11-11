@@ -1,5 +1,6 @@
 package com.mateuscancado.catalogo_midia.controller;
 
+import com.mateuscancado.catalogo_midia.dto.FilterRequestDTO;
 import com.mateuscancado.catalogo_midia.dto.ItemMidiaRequestDTO;
 import com.mateuscancado.catalogo_midia.dto.ItemMidiaResponseDTO;
 import com.mateuscancado.catalogo_midia.service.ItemMidiaService;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/midia")
@@ -27,5 +30,11 @@ public class ItemMidiaController {
     public ResponseEntity<ItemMidiaResponseDTO> buscar(@PathVariable Long id) {
         return ResponseEntity
                 .ok(itemMidiaService.buscar(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ItemMidiaResponseDTO>> buscarFiltro(@Valid @RequestBody FilterRequestDTO dto) {
+        return ResponseEntity
+                .ok(itemMidiaService.buscarFiltro(dto));
     }
 }
