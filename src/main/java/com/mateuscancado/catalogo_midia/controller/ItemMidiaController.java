@@ -6,6 +6,8 @@ import com.mateuscancado.catalogo_midia.dto.ItemMidiaResponseDTO;
 import com.mateuscancado.catalogo_midia.service.ItemMidiaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +34,16 @@ public class ItemMidiaController {
                 .ok(itemMidiaService.buscar(id));
     }
 
-    @GetMapping
+    @GetMapping("/filtro")
     public ResponseEntity<List<ItemMidiaResponseDTO>> buscarFiltro(@Valid @RequestBody FilterRequestDTO dto) {
         return ResponseEntity
                 .ok(itemMidiaService.buscarFiltro(dto));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ItemMidiaResponseDTO>> buscarTodos(Pageable pageable) {
+        return ResponseEntity
+                .ok(itemMidiaService.buscarTodos(pageable));
     }
 
     @PutMapping("/{id}")

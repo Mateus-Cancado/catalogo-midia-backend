@@ -10,6 +10,8 @@ import com.mateuscancado.catalogo_midia.repository.ItemMidiaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +36,11 @@ public class ItemMidiaService {
     public List<ItemMidiaResponseDTO> buscarFiltro(FilterRequestDTO dto) {
         List<ItemMidia> lista = itemMidiaRepository.findByTituloOrAutor(dto.tituloOrAutorDiretor());
         return itemMidiaMapper.toResponseList(lista);
+    }
+
+    public Page<ItemMidiaResponseDTO> buscarTodos(Pageable pageable) {
+        Page<ItemMidia> paginaEntities = itemMidiaRepository.findAll(pageable);
+        return paginaEntities.map(itemMidiaMapper::toResponse);
     }
 
     public ItemMidiaResponseDTO atualizar(Long id, ItemMidiaRequestDTO dto) {
