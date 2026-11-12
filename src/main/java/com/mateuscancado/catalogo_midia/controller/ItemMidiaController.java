@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/midia")
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class ItemMidiaController {
                 .ok(itemMidiaService.buscar(id));
     }
 
-    @GetMapping("/filtro")
+    @PostMapping("/filtro")
     public ResponseEntity<List<ItemMidiaResponseDTO>> buscarFiltro(@Valid @RequestBody FilterRequestDTO dto) {
         return ResponseEntity
                 .ok(itemMidiaService.buscarFiltro(dto));
